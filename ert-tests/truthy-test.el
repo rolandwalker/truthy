@@ -311,6 +311,8 @@
 (ert-deftest truthy-46 nil
   "Function"
   (should-not
+   (truthy (lambda (arg))))
+  (should-not
    (truthy (lambda ()))))
 
 (ert-deftest truthy-47 nil
