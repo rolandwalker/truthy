@@ -337,12 +337,13 @@
   (should
    (truthy (selected-window))))
 
-;; todo
 (ert-deftest truthy-50 nil
   "Window"
-  :expected-result :failed
-  (let ((value (selected-window)))
-    ;; destroy window
+  :tags '(:interactive)
+  (let ((value (split-window)))
+    (should
+     (truthy value))
+    (delete-window value)
     (should-not
      (truthy value))))
 
