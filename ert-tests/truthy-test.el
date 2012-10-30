@@ -352,12 +352,13 @@
   (should
    (truthy (selected-frame))))
 
-;; todo
 (ert-deftest truthy-52 nil
   "Frame"
-  :expected-result :failed
-  (let ((value (selected-frame)))
-    ;; destroy frame
+  :tags '(:interactive)
+  (let ((value (make-frame)))
+    (should
+     (truthy value))
+    (delete-frame value)
     (should-not
      (truthy value))))
 

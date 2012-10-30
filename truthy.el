@@ -66,8 +66,6 @@
 ;;
 ;;     Tests for truthy-s.
 ;;
-;;     Tests for deleted frame and window.
-;;
 ;;     Other sequence types requiring special handling?
 ;;
 ;;; License
