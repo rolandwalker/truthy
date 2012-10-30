@@ -362,6 +362,18 @@
     (should-not
      (truthy value))))
 
+(ert-deftest truthy-53 nil
+  "Ring"
+  (let ((value (make-ring 10)))
+    (should-not
+     (truthy value))
+    (ring-insert value "")
+    (should-not
+     (truthy value))
+    (ring-insert value 1)
+    (should
+     (truthy value))))
+
 ;;; truthy-s -- todo @@@
 
 ;;

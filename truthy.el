@@ -118,6 +118,7 @@
 
 (declare-function object-p "eieio.el")
 (declare-function process-live-p "subr.el")
+(declare-function ring-elements "ring.el")
 
 (eval-when-compile
   (defvar eieio-unbound))
@@ -160,6 +161,8 @@ If OBJ is a char-table, it must have keys as returned by
 
 If OBJ is a defstruct or EIEIO object, at least one slot must
 contain a truthy value.
+
+If OBJ is a ring, it must contain at least one truthy element.
 
 If OBJ is a string, it must have length greater than zero.
 
@@ -217,6 +220,15 @@ The function `truthy-s' is provided as shorthand for
     ;; compiled byte-code
     ((byte-code-function-p obj)
      (aref obj 1))
+
+    ;; ring
+    ((ring-p obj)
+     (catch 'truthy
+       (dolist (elt (ring-elements obj))
+         (when (or (and shallow elt)
+                   (truthy elt))
+           (throw 'truthy t)))
+       nil))
 
     ;; function
     ((functionp obj)
