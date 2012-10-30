@@ -383,6 +383,22 @@
     (should
      (truthy value))))
 
+(ert-deftest truthy-55 nil
+  "Macro"
+  (let ((value (defmacro truthy-tester () 1)))
+    (should
+     (truthy (symbol-function value)))))
+
+(ert-deftest truthy-56 nil
+  "Macro"
+  (let ((value (defmacro truthy-tester ())))
+    (should-not
+     (truthy (symbol-function value))))
+  (let ((value (defmacro truthy-tester (arg))))
+    (should-not
+     (truthy (symbol-function value)))))
+
+
 ;;; truthy-s -- todo @@@
 
 ;;

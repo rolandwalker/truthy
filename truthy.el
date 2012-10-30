@@ -149,8 +149,8 @@ If OBJ is a number, it must be non-zero.
 
 If OBJ is a hash table, it must have keys.
 
-If OBJ is a function, it must have a body containing at least one
-truthy value.
+If OBJ is a function or a macro, it must have a body containing
+at least one truthy value.
 
 If OBJ is compiled byte-code, it must have a body.
 
@@ -227,6 +227,17 @@ The function `truthy-s' is provided as shorthand for
     ((ring-p obj)
      (catch 'truthy
        (dolist (elt (ring-elements obj))
+         (when (or (and shallow elt)
+                   (truthy elt))
+           (throw 'truthy t)))
+       nil))
+
+    ;; macro
+    ((and (listp obj)
+          (eq 'macro (car obj))
+          (functionp (cdr obj)))
+     (catch 'truthy
+       (dolist (elt (cdddr obj))
          (when (or (and shallow elt)
                    (truthy elt))
            (throw 'truthy t)))
