@@ -33,8 +33,8 @@ for programming in Emacs Lisp.  Two functions are provided:
 Truthy provides an alternative measure of the "truthiness" of a
 value.  Whereas Lisp considers any non-nil value to be "true" when
 evaluating a Boolean condition, `truthy` considers a value to be
-"true" if it has *content*.  If the value is a string, it must
-have non-zero length.  If a number, it must be non-zero.  If a
+"true" if it has *content*.  If the value is a string or buffer, it
+must have non-zero length.  If a number, it must be non-zero.  If a
 hash, it must have keys.  If a window, it must be live.  See the
 docstring to `truthy` for more details.
 
