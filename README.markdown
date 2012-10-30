@@ -45,11 +45,6 @@ it, and add the following to your ~/.emacs file:
 (require 'truthy)
 ```
 
-Bugs
-----
-
-EIEIO must be loaded for test on objects to work.
-
 Compatibility and Requirements
 ------------------------------
 
