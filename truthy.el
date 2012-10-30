@@ -159,6 +159,8 @@ If OBJ is a keymap, it must have defined keys.
 If OBJ is a char-table, it must have keys as returned by
 `map-char-table'.
 
+If OBJ is a abbrev-table, it must have at least one value.
+
 If OBJ is a defstruct or EIEIO object, at least one slot must
 contain a truthy value.
 
@@ -300,6 +302,14 @@ The function `truthy-s' is provided as shorthand for
        (dolist (k '(:family :weight :slant :width :foundry :adstyle :registry :size :name :script :otf))
          (when (font-get obj k)
            (throw 'truthy t)))
+       nil))
+
+    ;; abbrev-table
+    ((ignore-errors (abbrev-table-p obj))
+     (catch 'truthy
+       (mapatoms #'(lambda (sym)
+                     (when (> (length (symbol-name sym)) 0)
+                       (throw 'truthy t))) obj)
        nil))
 
     ;; hash-table

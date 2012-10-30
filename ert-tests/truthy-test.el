@@ -374,6 +374,15 @@
     (should
      (truthy value))))
 
+(ert-deftest truthy-54 nil
+  "Abbrev table"
+  (let ((value (make-abbrev-table)))
+    (should-not
+     (truthy value))
+    (define-abbrev value "twoo" "two")
+    (should
+     (truthy value))))
+
 ;;; truthy-s -- todo @@@
 
 ;;
