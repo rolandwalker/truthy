@@ -16,8 +16,8 @@ Quickstart
 (truthy 0)                    ; nil
 (truthy (lambda ()))          ; nil
 (truthy (make-sparse-keymap)) ; nil
-(truthy 1)                    ; t
-(truthy '(a b c))             ; t
+(truthy 1)                    ; 1
+(truthy '(a b c))             ; '(a b c)
 (truthy '(nil nil nil))       ; nil
 ```
 

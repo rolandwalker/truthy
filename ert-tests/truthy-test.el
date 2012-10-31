@@ -16,7 +16,10 @@
 (ert-deftest truthy-01 nil
   "t"
   (should
-   (truthy t)))
+   (truthy t))
+  (should
+   (eq t
+       (truthy t))))
 
 (ert-deftest truthy-02 nil
   "nil"
@@ -25,8 +28,12 @@
 
 (ert-deftest truthy-03 nil
   "Number"
-  (should
-   (truthy 123)))
+  (let ((value 123))
+    (should
+     (truthy value))
+    (should
+     (= value
+        (truthy value)))))
 
 (ert-deftest truthy-04 nil
   "Number"
@@ -37,10 +44,18 @@
 
 (ert-deftest truthy-05 nil
   "String"
-  (should
-   (truthy "content"))
-  (should
-   (truthy " "))
+  (let ((value "content"))
+    (should
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))
+    (setq value " ")
+    (should
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-06 nil
   "String"
@@ -51,18 +66,28 @@
   "Symbol"
   (let ((value 'truthy))
     (should
-     (truthy value))))
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-08 nil
   "Symbol"
   (let ((value (gensym)))
     (should
-     (truthy value))))
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-09 nil
   "Vector"
-  (should
-   (truthy (vector 1 2 3))))
+  (let ((value (vector 1 2 3)))
+    (should
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-10 nil
   "Vector"
@@ -77,10 +102,18 @@
 
 (ert-deftest truthy-11 nil
   "List"
-  (should
-   (truthy '(a b c)))
-  (should
-   (truthy (list 1 2 3))))
+  (let ((value '(a b c)))
+    (should
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))
+    (setq value (list 1 2 3))
+    (should
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-12 nil
   "List"
@@ -93,7 +126,7 @@
   (should-not
    (truthy '(())))
   (should-not
-   (truthy '((nil)))))
+   (truthy '((nil))))
   (should-not
    (truthy (list 0 0 0)))
   (should-not
@@ -101,8 +134,12 @@
 
 (ert-deftest truthy-13 nil
   "Vector with list"
-  (should
-   (truthy (vector 1 2 (list 3)))))
+  (let ((value (vector 1 2 (list 3))))
+    (should
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-14 nil
   "Vector with list"
@@ -113,8 +150,12 @@
 
 (ert-deftest truthy-15 nil
   "List with vector"
-  (should
-   (truthy (list 1 2 (vector 3)))))
+  (let ((value (list 1 2 (vector 3))))
+    (should
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-16 nil
   "List with vector"
@@ -125,8 +166,12 @@
 
 (ert-deftest truthy-17 nil
   "Improper List"
-  (should
-   (truthy (list* 1 2 3))))
+  (let ((value (list* 1 2 3)))
+    (should
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-18 nil
   "Improper List"
@@ -135,22 +180,34 @@
 
 (ert-deftest truthy-19 nil
   "Don't modify improper lists"
-  (should (equal (list* 1 2 3)
-                 (let ((improper (list* 1 2 3)))
-                   (truthy improper)
-                   improper))))
+  (let* ((value (vector 1 2 3))
+         (backup (copy-tree value)))
+    (should
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))
+    (should
+     (equal backup value))))
 
 (ert-deftest truthy-20 nil
   "Cyclic list"
-  (let ((cyclic '(a b c d e f g h)))
-    (nconc cyclic cyclic)
+  (let ((value '(a b c d e f g h)))
+    (nconc value value)
     (should
-     (truthy cyclic))))
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-21 nil
   "Defstruct"
-  (should
-   (truthy (make-random-state))))
+  (let ((value (make-random-state)))
+    (should
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-22 nil
   "Defstruct"
@@ -159,8 +216,12 @@
 
 (ert-deftest truthy-23 nil
   "Bool vector"
-  (should
-   (truthy (make-bool-vector 10 t))))
+  (let ((value (make-bool-vector 10 t)))
+    (should
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-24 nil
   "Bool vector"
@@ -173,7 +234,10 @@
     (puthash "one" 1 value)
     (puthash "two" 2 value)
     (should
-     (truthy value))))
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-26 nil
   "Hash table"
@@ -183,8 +247,12 @@
 
 (ert-deftest truthy-27 nil
   "Byte code"
-  (should
-   (truthy (make-byte-code nil t nil nil))))
+  (let ((value (make-byte-code nil t nil nil)))
+    (should
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-28 nil
   "Byte code"
@@ -197,7 +265,10 @@
     (let ((value (make-marker)))
       (move-marker value 1)
       (should
-       (truthy value)))))
+       (truthy value))
+      (should
+       (eq value
+           (truthy value))))))
 
 (ert-deftest truthy-30 nil
   "Marker"
@@ -220,7 +291,10 @@
   (with-temp-buffer
     (let ((value (make-overlay 1 1)))
       (should
-       (truthy value)))))
+       (truthy value))
+      (should
+       (eq value
+           (truthy value))))))
 
 (ert-deftest truthy-33 nil
   "Overlay"
@@ -246,7 +320,10 @@
        (truthy buffer))
       (insert " ")
       (should
-       (truthy buffer)))))
+       (truthy buffer))
+      (should
+       (eq buffer
+           (truthy buffer))))))
 
 (ert-deftest truthy-36 nil
   "Buffer"
@@ -261,7 +338,10 @@
   (let ((value (make-sparse-keymap)))
     (define-key value (kbd "a") 'ignore)
     (should
-     (truthy value))))
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-38 nil
   "Keymap"
@@ -274,20 +354,31 @@
   (let ((value (start-process "sleeper" "*sleeper*" "sleep" "1")))
     (should
      (truthy value))
+    (should
+     (eq value
+         (truthy value)))
     (sleep-for 2)
     (should-not
      (truthy value))))
 
 (ert-deftest truthy-40 nil
   "Frame configuration"
-  (truthy (current-frame-configuration)))
+  (let ((value (current-frame-configuration)))
+    (should
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-41 nil
   "Char Table"
   (let ((value (make-char-table 'testing)))
     (set-char-table-range value '(?a . ?b) 3)
     (should
-     (truthy value))))
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-42 nil
   "Char Table"
@@ -297,8 +388,12 @@
 
 (ert-deftest truthy-43 nil
   "Font Spec"
-  (should
-   (truthy (font-spec :family "Monaco"))))
+  (let ((value (font-spec :family "Monaco")))
+    (should
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-44 nil
   "Font Spec"
@@ -307,8 +402,12 @@
 
 (ert-deftest truthy-45 nil
   "Function"
-  (should
-   (truthy (lambda () 1 2 3))))
+  (let ((value (lambda () 1 2 3)))
+    (should
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-46 nil
   "Function"
@@ -319,25 +418,32 @@
 
 (ert-deftest truthy-47 nil
   "Defclass"
-  (defclass tester nil
+  (defclass truthy-tester nil
     ((uid :initarg :uid)))
-  (let ((value (tester "object_name")))
+  (let ((value (truthy-tester "object_name")))
     (oset value :uid "my_id")
     (should
-     (truthy value))))
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-48 nil
   "Defclass"
-  (defclass tester nil
+  (defclass truthy-tester nil
     ((uid :initarg :uid)))
-  (let ((value (tester "object_name")))
+  (let ((value (truthy-tester "object_name")))
     (should-not
      (truthy value))))
 
 (ert-deftest truthy-49 nil
   "Window"
-  (should
-   (truthy (selected-window))))
+  (let ((value (selected-window)))
+    (should
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-50 nil
   "Window"
@@ -345,14 +451,21 @@
   (let ((value (split-window)))
     (should
      (truthy value))
+    (should
+     (eq value
+         (truthy value)))
     (delete-window value)
     (should-not
      (truthy value))))
 
 (ert-deftest truthy-51 nil
   "Frame"
-  (should
-   (truthy (selected-frame))))
+  (let ((value (selected-frame)))
+    (should
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-52 nil
   "Frame"
@@ -360,6 +473,9 @@
   (let ((value (make-frame)))
     (should
      (truthy value))
+    (should
+     (eq value
+         (truthy value)))
     (delete-frame value)
     (should-not
      (truthy value))))
@@ -374,7 +490,10 @@
      (truthy value))
     (ring-insert value 1)
     (should
-     (truthy value))))
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-54 nil
   "Abbrev table"
@@ -383,13 +502,19 @@
      (truthy value))
     (define-abbrev value "twoo" "two")
     (should
-     (truthy value))))
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
 
 (ert-deftest truthy-55 nil
   "Macro"
   (let ((value (defmacro truthy-tester () 1)))
     (should
-     (truthy (symbol-function value)))))
+     (truthy (symbol-function value)))
+    (should
+     (eq (symbol-function value)
+         (truthy (symbol-function value))))))
 
 (ert-deftest truthy-56 nil
   "Macro"

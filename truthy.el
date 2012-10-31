@@ -24,8 +24,8 @@
 ;;     (truthy 0)                    ; nil
 ;;     (truthy (lambda ()))          ; nil
 ;;     (truthy (make-sparse-keymap)) ; nil
-;;     (truthy 1)                    ; t
-;;     (truthy '(a b c))             ; t
+;;     (truthy 1)                    ; 1
+;;     (truthy '(a b c))             ; '(a b c)
 ;;     (truthy '(nil nil nil))       ; nil
 ;;
 ;; Explanation
@@ -141,6 +141,9 @@ Whereas Lisp considers any non-nil value to be \"true\" when
 evaluating a Boolean condition, `truthy' considers a value to be
 \"true\" if it has *content*.
 
+When OBJ has \"truthiness\", `truthy' returns OBJ, otherwise
+nil.
+
 If OBJ is a constant or symbol other than nil, it is always truthy.
 
 If OBJ is a number, it must be non-zero.
@@ -190,7 +193,7 @@ returns nil, because no truthy element is found in the list.  But
 
     (truthy '(0 0 0 0) 'shallow)
 
-returns non-nil, because the list holds non-nil elements.
+returns OBJ, because the list holds non-nil elements.
 
 The function `truthy-s' is provided as shorthand for
 \(truthy OBJ 'shallow\)."
@@ -218,12 +221,13 @@ The function `truthy-s' is provided as shorthand for
        (dolist (elt (append (subseq obj 1 (length obj)) nil))
          (when (or (and shallow elt)
                    (truthy elt))
-           (throw 'truthy t)))
+           (throw 'truthy obj)))
        nil))
 
     ;; compiled byte-code
     ((byte-code-function-p obj)
-     (aref obj 1))
+     (when (aref obj 1)
+       obj))
 
     ;; ring
     ((ring-p obj)
@@ -231,7 +235,7 @@ The function `truthy-s' is provided as shorthand for
        (dolist (elt (ring-elements obj))
          (when (or (and shallow elt)
                    (truthy elt))
-           (throw 'truthy t)))
+           (throw 'truthy obj)))
        nil))
 
     ;; macro
@@ -242,7 +246,7 @@ The function `truthy-s' is provided as shorthand for
        (dolist (elt (cdddr obj))
          (when (or (and shallow elt)
                    (truthy elt))
-           (throw 'truthy t)))
+           (throw 'truthy obj)))
        nil))
 
     ;; function
@@ -251,7 +255,7 @@ The function `truthy-s' is provided as shorthand for
        (dolist (elt (cddr obj))
          (when (or (and shallow elt)
                    (truthy elt))
-           (throw 'truthy t)))
+           (throw 'truthy obj)))
        nil))
 
     ;; frame-configuration
@@ -260,44 +264,52 @@ The function `truthy-s' is provided as shorthand for
        (dolist (elt (cdr obj))
          (when (or (and shallow elt)
                    (truthy elt))
-           (throw 'truthy t)))
+           (throw 'truthy obj)))
        nil))
 
     ;; keymap
     ((keymapp obj)
-     (not (equal obj (make-sparse-keymap))))
+     (when (not (equal obj (make-sparse-keymap)))
+       obj))
 
     ;; number
     ((numberp obj)
-     (/= 0 obj))
+     (when (/= 0 obj)
+       obj))
 
     ;; buffer
     ((bufferp obj)
-     (and (buffer-live-p obj)
-          (> (with-current-buffer obj (point-max)) 1)))
+     (when (and (buffer-live-p obj)
+                (> (with-current-buffer obj (point-max)) 1))
+       obj))
 
     ;; frame
     ((framep obj)
-     (frame-live-p obj))
+     (when (frame-live-p obj)
+       obj))
 
     ;; window
     ((windowp obj)
-     (window-live-p obj))
+     (when (window-live-p obj)
+       obj))
 
     ;; marker
     ((markerp obj)
-     (and (marker-buffer obj)
-          (marker-position obj)))
+     (when (and (marker-buffer obj)
+                (marker-position obj))
+       obj))
 
     ;; overlay
     ((overlayp obj)
-     (and (overlay-buffer obj)
-          (overlay-start obj)
-          (overlay-end obj)))
+     (when (and (overlay-buffer obj)
+                (overlay-start obj)
+                (overlay-end obj))
+       obj))
 
     ;; process
     ((processp obj)
-     (process-live-p obj))
+     (when (process-live-p obj)
+       obj))
 
     ;; EIEIO object
     ((and (fboundp 'object-p)
@@ -306,7 +318,7 @@ The function `truthy-s' is provided as shorthand for
        (dolist (elt (remq eieio-unbound (append (subseq obj 3 (length obj)) nil)))
          (when (or (and shallow elt)
                    (truthy elt))
-           (throw 'truthy t)))
+           (throw 'truthy obj)))
        nil))
 
     ;; font object
@@ -314,7 +326,7 @@ The function `truthy-s' is provided as shorthand for
      (catch 'truthy
        (dolist (k '(:family :weight :slant :width :foundry :adstyle :registry :size :name :script :otf))
          (when (font-get obj k)
-           (throw 'truthy t)))
+           (throw 'truthy obj)))
        nil))
 
     ;; abbrev-table
@@ -322,14 +334,14 @@ The function `truthy-s' is provided as shorthand for
      (catch 'truthy
        (mapatoms #'(lambda (sym)
                      (when (> (length (symbol-name sym)) 0)
-                       (throw 'truthy t))) obj)
+                       (throw 'truthy obj))) obj)
        nil))
 
     ;; hash-table
     ((hash-table-p obj)
      (catch 'truthy
        (maphash #'(lambda (k v)
-                    (throw 'truthy t))
+                    (throw 'truthy obj))
                 obj)
        nil))
 
@@ -337,13 +349,14 @@ The function `truthy-s' is provided as shorthand for
     ((char-table-p obj)
      (catch 'truthy
        (map-char-table #'(lambda (k v)
-                           (throw 'truthy t))
+                           (throw 'truthy obj))
                        obj)
        nil))
 
     ;; string
     ((stringp obj)
-     (> (length obj) 0))
+     (when (> (length obj) 0)
+       obj))
 
     ;; list
     ((listp obj)
@@ -354,15 +367,16 @@ The function `truthy-s' is provided as shorthand for
                (> len 0)
                (not (listp (nthcdr len obj))))
           ;; cons or improper list would choke mapcar
-          (and (truthy (subseq obj 0 len))
-               (truthy (nthcdr len obj))))
+          (when (and (truthy (subseq obj 0 len))
+                     (truthy (nthcdr len obj)))
+            obj))
          (t
           (catch 'truthy
             ;; subseq is to break circular lists
             (dolist (elt (subseq obj 0 (funcall measurer obj)))
               (when (or (and shallow elt)
                         (truthy elt))
-                (throw 'truthy t)))
+                (throw 'truthy obj)))
             nil)))))
 
     ;; non-list sequence
@@ -371,7 +385,7 @@ The function `truthy-s' is provided as shorthand for
        (dolist (elt (mapcar 'identity (append obj nil)))
          (when (or (and shallow elt)
                    (truthy elt))
-           (throw 'truthy t)))
+           (throw 'truthy obj)))
        nil))
 
     ;; fallback
