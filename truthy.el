@@ -70,8 +70,6 @@
 ;;
 ;; TODO
 ;;
-;;     Tests for truthy-s.
-;;
 ;;; License
 ;;
 ;; Simplified BSD License:

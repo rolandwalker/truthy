@@ -526,7 +526,70 @@
      (truthy (symbol-function value)))))
 
 
-;;; truthy-s -- todo @@@
+;;; truthy-s
+
+(ert-deftest truthy-s-01 nil
+  "Vector - empty"
+  (should-not
+   (truthy '[]))
+  (should-not
+   (truthy-s '[])))
+
+(ert-deftest truthy-s-02 nil
+  "Vector of nil"
+  (should-not
+   (truthy '[nil]))
+  (should-not
+   (truthy-s '[nil])))
+
+(ert-deftest truthy-s-03 nil
+  "Vector of empty vectors"
+  (should-not
+   (truthy '[ [] ]))
+  (should
+   (truthy-s '[ [] ])))
+
+(ert-deftest truthy-s-04 nil
+  "Vector of empty vectors"
+  (should-not
+   (truthy '[ [] [] ]))
+  (should
+   (truthy-s '[ [] [] ])))
+
+(ert-deftest truthy-s-05 nil
+  "Vector of zeros"
+  (should-not
+   (truthy '[0 0 0]))
+  (should
+   (truthy-s '[0 0 0])))
+
+(ert-deftest truthy-s-06 nil
+  "List - empty"
+  (should-not
+   (truthy '()))
+  (should-not
+   (truthy-s '())))
+
+(ert-deftest truthy-s-07 nil
+  "List of nils"
+  (should-not
+   (truthy '(nil)))
+  (should-not
+   (truthy-s '(nil))))
+
+(ert-deftest truthy-s-08 nil
+  "List of empty vectors"
+  (should-not
+   (truthy '( [] )))
+  (should
+   (truthy-s '( [] )))
+
+(ert-deftest truthy-s-09 nil
+  "List of zeros"
+  (should-not
+   (truthy '(0 0 0))))
+  (should
+   (truthy-s '(0 0 0))))
 
 ;;
 ;; Emacs
