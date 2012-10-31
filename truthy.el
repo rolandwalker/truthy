@@ -206,6 +206,10 @@ The function `truthy-s' is provided as shorthand for
           (= 0 (length obj)))
      nil)
 
+    ;; symbol
+    ((symbolp obj)
+     obj)
+
     ;; defstruct
     ((and (vectorp obj)
           (symbolp (aref obj 0))

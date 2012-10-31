@@ -49,13 +49,15 @@
 
 (ert-deftest truthy-07 nil
   "Symbol"
-  (should
-   (truthy 'truthy)))
+  (let ((value 'truthy))
+    (should
+     (truthy value))))
 
 (ert-deftest truthy-08 nil
   "Symbol"
-  (should-not
-   (truthy (gensym))))
+  (let ((value (gensym)))
+    (should
+     (truthy value))))
 
 (ert-deftest truthy-09 nil
   "Vector"
