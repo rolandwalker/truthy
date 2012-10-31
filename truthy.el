@@ -273,8 +273,12 @@ The function `truthy-s' is provided as shorthand for
 
     ;; keymap
     ((keymapp obj)
-     (when (not (equal obj (make-sparse-keymap)))
-       obj))
+     (catch 'truthy
+       (dolist (elt (cdr obj))
+         (when (or (and shallow elt)
+                   (truthy elt))
+           (throw 'truthy obj)))
+       nil))
 
     ;; number
     ((numberp obj)
