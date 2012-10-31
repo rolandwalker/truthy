@@ -8,7 +8,7 @@
 ;; Version: 0.2.2
 ;; Last-Updated: 30 Oct 2012
 ;; Package-Requires: ((list-utils "0.1.2"))
-;; EmacsWiki:
+;; EmacsWiki: Truthy
 ;; Keywords: extensions
 ;;
 ;; Simplified BSD License
@@ -39,10 +39,16 @@
 ;; Truthy provides an alternative measure of the "truthiness" of a
 ;; value.  Whereas Lisp considers any non-nil value to be "true" when
 ;; evaluating a Boolean condition, `truthy' considers a value to be
-;; "true" if it has *content*.  If the value is a string or buffer, it
-;; must have non-zero length.  If a number, it must be non-zero.  If a
-;; hash, it must have keys.  If a window, it must be live.  See the
-;; docstring to `truthy' for more details.
+;; "truthy" if it has *content*.  If the value is a string or buffer,
+;; it must have non-zero length.  If a number, it must be non-zero.
+;; If a hash, it must have keys.  If a window, it must be live.  See
+;; the docstring to `truthy' for more details.
+;;
+;; `truthy' always returns its argument on success.
+;;
+;; `truthy-s' is the shallow version of `truthy'.  It does not recurse
+;; into sequences, but returns success if any element of a sequence is
+;; non-nil.
 ;;
 ;; To use truthy, place the truthy.el library somewhere Emacs can find
 ;; it, and add the following to your ~/.emacs file:
@@ -139,7 +145,7 @@ A process is considered alive if its status is `run', `open',
 
 Whereas Lisp considers any non-nil value to be \"true\" when
 evaluating a Boolean condition, `truthy' considers a value to be
-\"true\" if it has *content*.
+\"truthy\" if it has *content*.
 
 When OBJ has \"truthiness\", `truthy' returns OBJ, otherwise
 nil.
@@ -366,7 +372,7 @@ The function `truthy-s' is provided as shorthand for
          ((and (consp obj)
                (> len 0)
                (not (listp (nthcdr len obj))))
-          ;; cons or improper list would choke mapcar
+          ;; cons or improper list would choke dolist
           (when (and (truthy (subseq obj 0 len))
                      (truthy (nthcdr len obj)))
             obj))
