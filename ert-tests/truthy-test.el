@@ -525,6 +525,15 @@
     (should-not
      (truthy (symbol-function value)))))
 
+(ert-deftest truthy-57 nil
+  "Cons with nil"
+  (let ((value '(nil . 4)))
+    (should
+     (truthy value))
+    (should
+     (eq value
+         (truthy value)))))
+
 
 ;;; truthy-s
 
