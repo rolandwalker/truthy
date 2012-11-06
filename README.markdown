@@ -19,6 +19,9 @@ Quickstart
 (truthy 1)                    ; 1
 (truthy '(a b c))             ; '(a b c)
 (truthy '(nil nil nil))       ; nil
+(truthy '([] "" 0))           ; nil
+
+(truthy-s '([] "" 0))         ; '([] "" 0)         ; shallow test
 ```
 
 Explanation

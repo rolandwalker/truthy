@@ -27,6 +27,9 @@
 ;;     (truthy 1)                    ; 1
 ;;     (truthy '(a b c))             ; '(a b c)
 ;;     (truthy '(nil nil nil))       ; nil
+;;     (truthy '([] "" 0))           ; nil
+;;
+;;     (truthy-s '([] "" 0))         ; '([] "" 0)         ; shallow test
 ;;
 ;; Explanation
 ;;
@@ -405,8 +408,8 @@ The function `truthy-s' is provided as shorthand for
 (defun truthy-s (obj)
   "Return non-nil if OBJ has shallow \"truthiness\".
 
-This is equivalent to calling `truthy' with the SHALLOW parameter
-set."
+This is equivalent to calling `truthy' with the SHALLOW argument
+non-nil."
   (truthy obj 'shallow))
 
 (provide 'truthy)
