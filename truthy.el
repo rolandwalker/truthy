@@ -375,8 +375,9 @@ The function `truthy-s' is provided as shorthand for
                (> len 0)
                (not (listp (nthcdr len obj))))
           ;; cons or improper list would choke dolist
-          (when (or (truthy (subseq obj 0 len))
-                    (truthy (nthcdr len obj)))
+          (when (or shallow
+                    (or (truthy (subseq obj 0 len))
+                        (truthy (nthcdr len obj))))
             obj))
          (t
           (catch 'truthy

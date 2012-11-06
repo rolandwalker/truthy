@@ -600,6 +600,14 @@
   (should
    (truthy-s '(0 0 0))))
 
+(ert-deftest truthy-s-10 nil
+  "Cons with nil"
+  (let ((value '(nil . [])))
+    (should-not
+     (truthy value))
+    (should
+     (truthy-s value))))
+
 ;;
 ;; Emacs
 ;;
