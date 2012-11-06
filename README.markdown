@@ -20,18 +20,21 @@ Quickstart
 (truthy '(a b c))             ; '(a b c)
 (truthy '(nil nil nil))       ; nil
 (truthy '([] "" 0))           ; nil
-
+ 
 (truthy-s '([] "" 0))         ; '([] "" 0)         ; shallow test
+ 
+(truthy-l '(nil nil nil))     ; '(nil nil nil)     ; lengthwise test
 ```
 
 Explanation
 -----------
 
 This library has no user-level interface; it is only useful
-for programming in Emacs Lisp.  Two functions are provided:
+for programming in Emacs Lisp.  Three functions are provided:
 
 	truthy
 	truthy-s
+	truthy-l
 
 Truthy provides an alternative measure of the "truthiness" of a
 value.  Whereas Lisp considers any non-nil value to be "true" when
@@ -46,6 +49,10 @@ the docstring to `truthy` for more details.
 `truthy-s` is the shallow version of `truthy`.  It does not recurse
 into sequences, but returns success if any element of a sequence is
 non-nil.
+
+`truthy-l` is the "lengthwise" version of `truthy`.  It does not
+recurse into sequences, but returns success if the argument has
+length, considering only the variable portion of a data type.
 
 To use truthy, place the truthy.el library somewhere Emacs can find
 it, and add the following to your ~/.emacs file:
