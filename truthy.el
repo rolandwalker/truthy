@@ -5,8 +5,8 @@
 ;; Author: Roland Walker <walker@pobox.com>
 ;; Homepage: http://github.com/rolandwalker/truthy
 ;; URL: http://raw.github.com/rolandwalker/truthy/master/truthy.el
-;; Version: 0.2.4
-;; Last-Updated: 31 Oct 2012
+;; Version: 0.2.6
+;; Last-Updated:  6 Nov 2012
 ;; Package-Requires: ((list-utils "0.1.2"))
 ;; EmacsWiki: Truthy
 ;; Keywords: extensions
