@@ -285,7 +285,11 @@ The function `truthy-l' is provided as shorthand for
           (functionp (cdr obj)))
      (catch 'truthy
        (dolist (elt (cdddr obj))
-         (when (or length
+         (when (or (and length
+                        (if (and (>= emacs-major-version 24)
+                                 (>= emacs-minor-version 3))
+                            (> (length (cdddr obj)) 1)
+                          t))
                    (and shallow elt)
                    (truthy elt))
            (throw 'truthy obj)))
