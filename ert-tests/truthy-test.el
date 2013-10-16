@@ -534,6 +534,25 @@
      (eq value
          (truthy value)))))
 
+(ert-deftest truthy-58 nil
+  "Posn"
+  :tags '(:interactive)
+  :expected-result (if (and (>= emacs-major-version 24) (>= emacs-minor-version 3)) :passed :failed)
+  (with-temp-buffer
+    (should
+     (truthy (posn-at-point)))
+    (should (equal (posn-at-point)
+                   (truthy (posn-at-point))))))
+
+(ert-deftest truthy-59 nil
+  "Posn"
+  :tags '(:interactive)
+  (with-temp-buffer
+    (let ((value (posn-at-point)))
+      (kill-buffer (current-buffer))
+      (delete-window (posn-window value))
+      (should-not
+       (truthy value)))))
 
 ;;; truthy-s
 
@@ -608,6 +627,28 @@
     (should
      (truthy-s value))))
 
+(ert-deftest truthy-s-11 nil
+  "Posn"
+  :tags '(:interactive)
+  :expected-result (if (and (>= emacs-major-version 24) (>= emacs-minor-version 3)) :passed :failed)
+  (with-temp-buffer
+    (should
+     (truthy-s (posn-at-point)))
+    (should (equal (posn-at-point)
+                   (truthy-s (posn-at-point))))))
+
+(ert-deftest truthy-s-12 nil
+  "Posn"
+  :tags '(:interactive)
+  :expected-result (if (and (>= emacs-major-version 24) (>= emacs-minor-version 3)) :passed :failed)
+  (with-temp-buffer
+    (let ((value (posn-at-point)))
+      (kill-buffer (current-buffer))
+      (delete-window (posn-window value))
+      (should-not
+       (truthy value))
+      (should
+       (truthy-s value)))))
 
 ;;; truthy-l
 
@@ -1204,6 +1245,27 @@
     (should
      (truthy-l value))))
 
+(ert-deftest truthy-l-69 nil
+  "Posn"
+  :tags '(:interactive)
+  (with-temp-buffer
+    (should
+     (truthy-l (posn-at-point)))
+    (should (equal (posn-at-point)
+                   (truthy-l (posn-at-point))))))
+
+(ert-deftest truthy-l-70 nil
+  "Posn"
+  :tags '(:interactive)
+  :expected-result (if (and (>= emacs-major-version 24) (>= emacs-minor-version 3)) :passed :failed)
+  (with-temp-buffer
+    (let ((value (posn-at-point)))
+      (kill-buffer (current-buffer))
+      (delete-window (posn-window value))
+      (should-not
+       (truthy value))
+      (should
+       (truthy-l value)))))
 
 ;;
 ;; Emacs

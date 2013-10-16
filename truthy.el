@@ -133,6 +133,7 @@
 (declare-function object-p "eieio.el")
 (declare-function process-live-p "subr.el")
 (declare-function ring-elements "ring.el")
+(declare-function posnp "subr.el")
 
 (eval-when-compile
   (defvar eieio-unbound))
@@ -146,6 +147,14 @@ A process is considered alive if its status is `run', `open',
 `listen', `connect' or `stop'."
     (memq (process-status process)
           '(run open listen connect stop))))
+
+(unless (fboundp 'posnp)
+  (defun posnp (obj)
+    "Return non-nil if OBJ appears to be a valid `posn' object."
+    (and (windowp (car-safe obj))
+         (atom (car-safe (setq obj (cdr obj))))
+         (integerp (car-safe (car-safe (setq obj (cdr obj)))))
+         (integerp (car-safe (cdr obj))))))
 
 ;;; external interface
 
@@ -324,6 +333,15 @@ The function `truthy-l' is provided as shorthand for
                    (truthy elt))
            (throw 'truthy obj)))
        nil))
+
+    ;; posn object
+    ((posnp obj)
+     (when (or length
+               (and (or (and shallow (posn-point obj))
+                        (truthy (posn-point obj) shallow length))
+                    (or (and shallow (posn-window obj))
+                        (truthy (posn-window obj) shallow length))))
+       obj))
 
     ;; number
     ((numberp obj)
