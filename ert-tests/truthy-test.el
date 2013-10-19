@@ -418,9 +418,9 @@
 
 (ert-deftest truthy-47 nil
   "Defclass"
-  (defclass truthy-tester nil
+  (defclass truthy-tester-47 nil
     ((uid :initarg :uid)))
-  (let ((value (truthy-tester "object_name")))
+  (let ((value (truthy-tester-47 "object_name")))
     (oset value :uid "my_id")
     (should
      (truthy value))
@@ -430,9 +430,9 @@
 
 (ert-deftest truthy-48 nil
   "Defclass"
-  (defclass truthy-tester nil
+  (defclass truthy-tester-48 nil
     ((uid :initarg :uid)))
-  (let ((value (truthy-tester "object_name")))
+  (let ((value (truthy-tester-48 "object_name")))
     (should-not
      (truthy value))))
 
@@ -1115,9 +1115,9 @@
 
 (ert-deftest truthy-l-56 nil
   "Defclass"
-  (defclass truthy-tester nil
+  (defclass truthy-tester-l56 nil
     ((uid :initarg :uid)))
-  (let ((value (truthy-tester "object_name")))
+  (let ((value (truthy-tester-l56 "object_name")))
     (oset value :uid "my_id")
     (should
      (truthy-l value))
@@ -1127,9 +1127,9 @@
 
 (ert-deftest truthy-l-57 nil
   "Defclass"
-  (defclass truthy-tester nil
+  (defclass truthy-tester-l57 nil
     ((uid :initarg :uid)))
-  (let ((value (truthy-tester "object_name")))
+  (let ((value (truthy-tester-l57 "object_name")))
     (should-not
      (truthy-l value))))
 
