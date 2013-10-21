@@ -7,7 +7,7 @@
   (when (fboundp 'package-initialize)
     (package-initialize)))
 
-(require 'eieio)
+(require 'eieio nil t)
 (require 'list-utils)
 (require 'truthy)
 
@@ -418,6 +418,7 @@
 
 (ert-deftest truthy-47 nil
   "Defclass"
+  :expected-result (if (fboundp 'defclass) :passed :failed)
   (defclass truthy-tester-47 nil
     ((uid :initarg :uid)))
   (let ((value (truthy-tester-47 "object_name")))
@@ -430,6 +431,7 @@
 
 (ert-deftest truthy-48 nil
   "Defclass"
+  :expected-result (if (fboundp 'defclass) :passed :failed)
   (defclass truthy-tester-48 nil
     ((uid :initarg :uid)))
   (let ((value (truthy-tester-48 "object_name")))
