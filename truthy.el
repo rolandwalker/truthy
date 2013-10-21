@@ -140,6 +140,13 @@
 
 ;;; compatibility functions
 
+(unless (fboundp 'string-match-p)
+  ;; added in 23.x
+  (defun string-match-p (regexp string &optional start)
+    "Same as `string-match' except this function does not change the match data."
+    (let ((inhibit-changing-match-data t))
+      (string-match regexp string start))))
+
 (unless (fboundp 'process-live-p)
   (defun process-live-p (process)
     "Returns non-nil if PROCESS is alive.
