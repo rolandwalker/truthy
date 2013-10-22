@@ -7,7 +7,7 @@
 ;; URL: http://raw.github.com/rolandwalker/truthy/master/truthy.el
 ;; Version: 0.2.6
 ;; Last-Updated:  6 Nov 2012
-;; Package-Requires: ((list-utils "0.1.2"))
+;; Package-Requires: ((list-utils "0.4.2"))
 ;; EmacsWiki: Truthy
 ;; Keywords: extensions
 ;;
