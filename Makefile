@@ -65,7 +65,7 @@ test-dep-1 :
 	(echo "Can't load test dependency $(TEST_DEP_1).el, run 'make downloads' to fetch it" ; exit 1)
 
 test-dep-2 :
-	@cd '$(TEST_DIR)'                                 && \
+	cd '$(TEST_DIR)'                                 && \
 	$(RESOLVED_EMACS) $(EMACS_BATCH)  -L . -L .. --eval  \
 	    "(progn                                          \
 	      (setq package-load-list '(($(TEST_DEP_2) t)))  \
