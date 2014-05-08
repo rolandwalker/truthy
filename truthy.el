@@ -4,7 +4,7 @@
 ;;
 ;; Author: Roland Walker <walker@pobox.com>
 ;; Homepage: http://github.com/rolandwalker/truthy
-;; URL: http://raw.github.com/rolandwalker/truthy/master/truthy.el
+;; URL: http://raw.githubusercontent.com/rolandwalker/truthy/master/truthy.el
 ;; Version: 0.2.8
 ;; Last-Updated:  1 Nov 2013
 ;; Package-Requires: ((list-utils "0.4.2"))
