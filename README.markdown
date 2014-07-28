@@ -1,12 +1,10 @@
 [![Build Status](https://secure.travis-ci.org/rolandwalker/truthy.png?branch=master)](http://travis-ci.org/rolandwalker/truthy)
 
-Overview
-========
+# Overview
 
 Test the content of a value in Emacs Lisp.
 
-Quickstart
-----------
+## Quickstart
 
 ```elisp
 (require 'truthy)
@@ -26,8 +24,7 @@ Quickstart
 (truthy-l '(nil nil nil))     ; '(nil nil nil)     ; lengthwise test
 ```
 
-Explanation
------------
+## Explanation
 
 This library has no user-level interface; it is only useful
 for programming in Emacs Lisp.  Three functions are provided:
@@ -61,8 +58,7 @@ it, and add the following to your ~/.emacs file:
 (require 'truthy)
 ```
 
-Compatibility and Requirements
-------------------------------
+## Compatibility and Requirements
 
 	GNU Emacs version 24.4-devel     : yes, at the time of writing
 	GNU Emacs version 24.3           : yes
