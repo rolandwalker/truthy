@@ -8,7 +8,7 @@ Test the content of a value in Emacs Lisp.
 Quickstart
 ----------
 
-```lisp
+```elisp
 (require 'truthy)
  
 (truthy "")                   ; nil
@@ -57,7 +57,7 @@ length, considering only the variable portion of a data type.
 To use truthy, place the truthy.el library somewhere Emacs can find
 it, and add the following to your ~/.emacs file:
 
-```lisp
+```elisp
 (require 'truthy)
 ```
 
