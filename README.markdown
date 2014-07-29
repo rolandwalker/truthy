@@ -51,8 +51,8 @@ non-nil.
 recurse into sequences, but returns success if the argument has
 length, considering only the variable portion of a data type.
 
-To use truthy, place the truthy.el library somewhere Emacs can find
-it, and add the following to your ~/.emacs file:
+To use truthy, place the `truthy.el` library somewhere Emacs can find
+it, and add the following to your `~/.emacs` file:
 
 ```elisp
 (require 'truthy)
