@@ -4,6 +4,10 @@
 
 Test the content of a value in Emacs Lisp.
 
+ * [Quickstart](#quickstart)
+ * [Explanation](#explanation)
+ * [Compatibility and Requirements](#compatibility-and-requirements)
+
 ## Quickstart
 
 ```elisp
